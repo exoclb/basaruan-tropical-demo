@@ -1,0 +1,183 @@
+---
+import GuestName from '../components/GuestName.astro';
+import Countdown from '../components/Countdown.astro';
+import QuranVerse from '../components/QuranVerse.astro';
+import Parents from '../components/Parents.astro';
+import Events from '../components/Events.astro';
+import Gallery from '../components/Gallery.astro';
+import LoveStory from '../components/LoveStory.astro';
+import RSVP from '../components/RSVP.astro';
+import ShareButton from '../components/ShareButton.astro';
+import BottomNav from '../components/BottomNav.astro';
+import data from '../data/wedding.json';
+---
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <title>{data.groom} & {data.bride} - Wedding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#87CEEB" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="tropical-bg"></div>
+    <main>
+      <section id="hero">
+        <div class="hero">
+          <p class="emoji">🌺</p>
+          <p class="label">Wedding Invitation</p>
+          <h1>{data.groom} <span>&</span> {data.bride}</h1>
+          <p class="emoji">🌺</p>
+        </div>
+      </section>
+      <section id="tamu"><GuestName /></section>
+      <section id="countdown"><Countdown weddingDate={data.date} /></section>
+      <section id="ayat"><QuranVerse /></section>
+      <section id="keluarga">
+        <Parents 
+          groom={data.groom}
+          bride={data.bride}
+          groomFather={data.groomFather}
+          groomMother={data.groomMother}
+          brideFather={data.brideFather}
+          brideMother={data.brideMother}
+        />
+      </section>
+      <section id="acara"><Events events={data.events} /></section>
+      <section id="galeri"><Gallery images={data.gallery} /></section>
+      <section id="cerita"><LoveStory loveStory={data.loveStory} /></section>
+      <section id="rsvp"><RSVP /></section>
+      <section id="bagi"><ShareButton /></section>
+    </main>
+    <footer>
+      <a href="/cover" class="back-btn">← Kembali ke Cover</a>
+    </footer>
+    <BottomNav musicUrl={data.music.url} />
+  </body>
+</html>
+<script>
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('main > section').forEach(el => {
+    el.classList.add('scroll-reveal');
+    observer.observe(el);
+  });
+</script>
+<style is:global>
+  * {
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f4e4bc 0%, #fff 50%, #f4e4bc 100%);
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #2E8B57;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .tropical-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse at 10% 90%, rgba(46, 139, 87, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 90%, rgba(255, 140, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem 0.5rem 5rem;
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2E8B57;
+  }
+
+  footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding-bottom: 5rem;
+  }
+
+  .back-btn {
+    color: #2E8B57;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .back-btn:active {
+    color: #1e6b47;
+  }
+</style>
+<style>
+  .hero {
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .emoji {
+    font-size: 2rem;
+    margin: 0.5rem 0;
+  }
+
+  .hero .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #2E8B57;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+  }
+
+  .hero h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(2rem, 10vw, 3rem);
+    line-height: 1.2;
+    color: #2E8B57;
+    margin: 0.5rem 0;
+  }
+
+  .hero h1 span {
+    display: block;
+    font-size: 0.7em;
+  }
+</style>

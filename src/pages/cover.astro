@@ -1,0 +1,200 @@
+---
+import data from '../data/wedding.json';
+const date = new Date(data.date);
+const formattedDate = date.toLocaleDateString('id-ID', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+});
+---
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <title>{data.groom} & {data.bride} - Wedding Invitation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#87CEEB" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="cover">
+      <div class="sun"></div>
+      <div class="waves"></div>
+      <div class="content">
+        <p class="label fade-in">You're Invited To</p>
+        <h1 class="fade-in delay-1">{data.groom} <span>&</span> {data.bride}</h1>
+        <p class="date fade-in delay-2">{formattedDate}</p>
+        <a href="/home" class="btn fade-in delay-3">Buka Undangan</a>
+      </div>
+      <div class="palm palm-left">🌴</div>
+      <div class="palm palm-right">🌴</div>
+    </div>
+  </body>
+</html>
+<script>
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+</script>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: linear-gradient(180deg, #87CEEB 0%, #f4e4bc 60%, #f4a460 100%);
+  }
+
+  .cover {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sun {
+    position: absolute;
+    top: 10%;
+    right: 15%;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+  }
+
+  .waves {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: 
+      linear-gradient(180deg, transparent 0%, rgba(30, 144, 255, 0.2) 100%);
+    border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+  }
+
+  .palm {
+    position: absolute;
+    font-size: 4rem;
+    bottom: 15%;
+    opacity: 0.6;
+  }
+
+  .palm-left {
+    left: 5%;
+    transform: rotate(-15deg);
+  }
+
+  .palm-right {
+    right: 5%;
+    transform: rotate(15deg) scaleX(-1);
+  }
+
+  .content {
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    margin: 0 0 1.5rem;
+    line-height: 1.2;
+    color: #fff;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  h1 span {
+    display: block;
+    font-size: 0.6em;
+  }
+
+  .date {
+    color: #fff;
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    font-weight: 300;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: #fff;
+    color: #2E8B57;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  .delay-1 { animation-delay: 0.2s; }
+  .delay-2 { animation-delay: 0.4s; }
+  .delay-3 { animation-delay: 0.6s; }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .sun {
+      width: 60px;
+      height: 60px;
+      top: 5%;
+      right: 10%;
+    }
+
+    .palm {
+      font-size: 2.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 12vw, 3rem);
+    }
+
+    .btn {
+      padding: 0.875rem 2rem;
+      font-size: 0.85rem;
+    }
+  }
+</style>

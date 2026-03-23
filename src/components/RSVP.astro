@@ -1,0 +1,179 @@
+---
+---
+<div class="rsvp">
+  <h2>Konfirmasi Kehadiran</h2>
+  
+  <form id="rsvp-form">
+    <div class="form-group">
+      <label for="name">Nama Tamu</label>
+      <input type="text" id="name" name="name" required placeholder="Masukkan nama Anda" autocomplete="name" />
+    </div>
+    
+    <div class="form-group">
+      <label for="attendance">Kehadiran</label>
+      <select id="attendance" name="attendance" required>
+        <option value="">Pilih...</option>
+        <option value="hadir">Hadir</option>
+        <option value="tidak-hadir">Tidak Hadir</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="guests">Jumlah Tamu</label>
+      <input type="number" id="guests" name="guests" min="1" max="5" value="1" />
+    </div>
+    
+    <div class="form-group">
+      <label for="message">Ucapan / Doa</label>
+      <textarea id="message" name="message" rows="3" placeholder="Tulis ucapan atau doa untuk kedua mempelai"></textarea>
+    </div>
+    
+    <button type="submit">Kirim Konfirmasi</button>
+  </form>
+  
+  <div id="success-message" class="success">
+    <p class="emoji">✓</p>
+    <p>Terima kasih!</p>
+    <p class="sub">Kehadiran Anda telah dikonfirmasi.</p>
+  </div>
+</div>
+<script>
+  const form = document.getElementById('rsvp-form') as HTMLFormElement | null;
+  const success = document.getElementById('success-message') as HTMLElement | null;
+  
+  if (form && success) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      console.log('RSVP:', data);
+      form.style.display = 'none';
+      success.style.display = 'block';
+    });
+  }
+</script>
+<style>
+  .rsvp {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0 0.5rem;
+    max-width: 100%;
+  }
+  
+  h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 1rem;
+  }
+  
+  #rsvp-form {
+    max-width: 100%;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .success {
+    display: none;
+    background: #f0f9f0;
+    padding: 2rem 1rem;
+    border-radius: 12px;
+    animation: successPop 0.5s ease;
+  }
+
+  .success .emoji {
+    font-size: 2.5rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .success p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .success .sub {
+    font-size: 0.85rem !important;
+    color: #666 !important;
+    margin-top: 0.25rem !important;
+  }
+
+  @keyframes successPop {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  .form-group {
+    margin-bottom: 0.875rem;
+    text-align: left;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #555;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background: white;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  
+  input:active, select:active, textarea:active {
+    border-color: #c9a87c;
+    box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.1);
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #c9a87c;
+    box-shadow: 0 0 0 3px rgba(201, 168, 124, 0.15);
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  button {
+    background: #c9a87c;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+    touch-action: manipulation;
+  }
+  
+  button:active {
+    background: #b8956a;
+    transform: scale(0.98);
+  }
+
+  @media (max-width: 480px) {
+    input, select, textarea {
+      font-size: 16px;
+      padding: 0.7rem;
+    }
+
+    button {
+      padding: 0.875rem 1.5rem;
+    }
+  }
+</style>

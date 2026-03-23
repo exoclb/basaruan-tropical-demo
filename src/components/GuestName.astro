@@ -1,0 +1,82 @@
+---
+---
+<div class="guest-banner" id="guest-banner">
+  <p class="guest-text">Kepada Yth.</p>
+  <p class="guest-name" id="guest-name"></p>
+  <p class="guest-invite">mengundang Bapak/Ibu/Saudara/i untuk hadir di pernikahan kami</p>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const guestName = params.get('tamu');
+  const banner = document.getElementById('guest-banner') as HTMLElement | null;
+  const nameEl = document.getElementById('guest-name') as HTMLElement | null;
+  
+  if (guestName && nameEl && banner) {
+    nameEl.textContent = guestName;
+    banner.classList.add('show');
+  } else if (banner) {
+    const guestText = banner.querySelector('.guest-text') as HTMLElement | null;
+    const guestInvite = banner.querySelector('.guest-invite') as HTMLElement | null;
+    if (guestText) guestText.textContent = 'Tanpa Mengurangi Rasa Hormat, Kami Mengundang';
+    if (guestInvite) guestInvite.style.display = 'none';
+    banner.classList.add('show');
+  }
+</script>
+
+<style>
+  .guest-banner {
+    text-align: center;
+    padding: 1.25rem 1rem;
+    margin: 1rem 0.5rem 1.5rem;
+    background: linear-gradient(135deg, rgba(201, 168, 124, 0.08) 0%, rgba(201, 168, 124, 0.03) 100%);
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: all 0.5s ease;
+  }
+
+  .guest-banner.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .guest-text {
+    font-size: 0.7rem;
+    color: #888;
+    margin: 0 0 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .guest-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 6vw, 1.8rem);
+    color: #2c2c2c;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .guest-invite {
+    font-size: 0.75rem;
+    color: #888;
+    margin: 0.5rem 0 0;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 480px) {
+    .guest-banner {
+      padding: 1rem 0.75rem;
+      margin: 1rem 0 1.25rem;
+    }
+
+    .guest-text {
+      font-size: 0.65rem;
+    }
+
+    .guest-invite {
+      font-size: 0.7rem;
+    }
+  }
+</style>

@@ -1,0 +1,152 @@
+---
+const { weddingDate = '' } = Astro.props;
+---
+<div class="countdown">
+  <h2>Menuju Hari Bahagia</h2>
+  <div class="heart-icon">♥</div>
+  <div class="time-container">
+    <div class="time-box">
+      <span class="number" id="days">--</span>
+      <span class="label">Hari</span>
+    </div>
+    <div class="time-box">
+      <span class="number" id="hours">--</span>
+      <span class="label">Jam</span>
+    </div>
+    <div class="time-box">
+      <span class="number" id="minutes">--</span>
+      <span class="label">Menit</span>
+    </div>
+    <div class="time-box">
+      <span class="number" id="seconds">--</span>
+      <span class="label">Detik</span>
+    </div>
+  </div>
+</div>
+<script is:inline define:vars={{ weddingDate }}>
+  function updateCountdown() {
+    const wedding = new Date(weddingDate);
+    const now = new Date();
+    const diff = wedding.getTime() - now.getTime();
+    
+    if (diff <= 0) {
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+      if (daysEl) daysEl.textContent = '0';
+      if (hoursEl) hoursEl.textContent = '0';
+      if (minutesEl) minutesEl.textContent = '0';
+      if (secondsEl) secondsEl.textContent = '0';
+      return;
+    }
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    if (daysEl) daysEl.textContent = String(days);
+    if (hoursEl) hoursEl.textContent = String(hours);
+    if (minutesEl) minutesEl.textContent = String(minutes);
+    if (secondsEl) secondsEl.textContent = String(seconds);
+  }
+  
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+<style>
+  .countdown {
+    text-align: center;
+    margin: 1.5rem 0;
+    animation: fadeIn 0.6s ease 0.2s both;
+  }
+  
+  h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #999;
+    font-weight: normal;
+    margin-bottom: 0.75rem;
+  }
+
+  .heart-icon {
+    font-size: 1.5rem;
+    color: #c9a87c;
+    margin-bottom: 0.75rem;
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+  
+  .time-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+  }
+  
+  .time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 0.75rem 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+  }
+
+  .time-box:active {
+    transform: scale(0.95);
+  }
+
+  .number {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    font-weight: 300;
+    color: #c9a87c;
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1;
+  }
+  
+  .label {
+    font-size: 0.6rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.25rem;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @media (max-width: 380px) {
+    .time-container {
+      gap: 0.4rem;
+    }
+    
+    .time-box {
+      padding: 0.6rem 0.3rem;
+    }
+    
+    .number {
+      font-size: 1.3rem;
+    }
+    
+    .label {
+      font-size: 0.55rem;
+    }
+  }
+</style>

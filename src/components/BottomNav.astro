@@ -1,0 +1,189 @@
+---
+const { musicUrl = '' } = Astro.props;
+const navItems = [
+  { id: 'hero', label: 'Home', icon: '♡' },
+  { id: 'acara', label: 'Acara', icon: '📍' },
+  { id: 'galeri', label: 'Galeri', icon: '📷' },
+  { id: 'rsvp', label: 'RSVP', icon: '✓' },
+  { id: 'bagi', label: 'Bagi', icon: '↗' }
+];
+---
+<nav class="bottom-nav">
+  <button class="nav-item music-btn" id="music-toggle" aria-label="Toggle Music">
+    <span class="nav-icon" id="music-icon">♪</span>
+    <span class="nav-label">Musik</span>
+  </button>
+  
+  {navItems.map((item) => (
+    <a href={`#${item.id}`} class="nav-item" data-section={item.id}>
+      <span class="nav-icon">{item.icon}</span>
+      <span class="nav-label">{item.label}</span>
+    </a>
+  ))}
+</nav>
+
+<audio id="bg-music" loop preload="none">
+  <source src={musicUrl} type="audio/mpeg" />
+</audio>
+
+<script>
+  const navItems = document.querySelectorAll('.nav-item[data-section]');
+  const sections = document.querySelectorAll('main > section');
+  const audio = document.getElementById('bg-music') as HTMLAudioElement;
+  const toggle = document.getElementById('music-toggle') as HTMLButtonElement | null;
+  const icon = document.getElementById('music-icon') as HTMLElement | null;
+  let isPlaying = false;
+
+  if (toggle && icon) {
+    toggle.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        icon.textContent = '♪';
+        toggle.classList.remove('active');
+      } else {
+        audio.play().catch(() => {});
+        icon.textContent = '♫';
+        toggle.classList.add('active');
+      }
+      isPlaying = !isPlaying;
+    });
+  }
+
+  navItems.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sectionId = (link as HTMLElement).dataset.section;
+      if (sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const offset = 80;
+          const top = section.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('data-section') === id);
+        });
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-20% 0px -60% 0px' });
+
+  sections.forEach(section => {
+    if (section.id) sectionObserver.observe(section);
+  });
+</script>
+
+<style>
+  .bottom-nav {
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: white;
+    padding: 0.5rem 0.25rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    z-index: 999;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.3rem;
+    text-decoration: none;
+    color: #999;
+    border-radius: 40px;
+    transition: all 0.2s ease;
+    min-width: 44px;
+    flex: 1;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .nav-item:active {
+    transform: scale(0.92);
+  }
+
+  .nav-item.active {
+    color: #c9a87c;
+  }
+
+  .nav-item.active .nav-icon {
+    transform: scale(1.1);
+  }
+
+  .nav-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-bottom: 0.15rem;
+    transition: transform 0.2s ease;
+  }
+
+  .nav-label {
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+
+  .music-btn.active .nav-icon {
+    animation: bounce 0.5s ease infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+
+  @media (min-width: 400px) {
+    .bottom-nav {
+      max-width: 380px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+
+    .nav-item {
+      min-width: 50px;
+      padding: 0.5rem 0.5rem;
+    }
+
+    .nav-icon {
+      font-size: 1.3rem;
+    }
+
+    .nav-label {
+      font-size: 0.6rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .bottom-nav {
+      max-width: 500px;
+      bottom: 16px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+
+    .nav-item {
+      min-width: 60px;
+    }
+
+    .nav-label {
+      font-size: 0.65rem;
+    }
+  }
+</style>

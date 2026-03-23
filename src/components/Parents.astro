@@ -1,0 +1,120 @@
+---
+const { 
+  groom = '',
+  bride = '',
+  groomFather = '',
+  groomMother = '',
+  brideFather = '',
+  brideMother = ''
+} = Astro.props;
+---
+<div class="parents">
+  <h2>Dua Keluarga</h2>
+  <div class="parents-container">
+    <div class="parent-side groom">
+      <h3>Mempelai Pria</h3>
+      <p class="name">{groom}</p>
+      <p class="parent-info">
+        {groomFather} &amp; {groomMother}
+      </p>
+    </div>
+    <div class="divider">
+      <span>&</span>
+    </div>
+    <div class="parent-side bride">
+      <h3>Mempelai Wanita</h3>
+      <p class="name">{bride}</p>
+      <p class="parent-info">
+        {brideFather} &amp; {brideMother}
+      </p>
+    </div>
+  </div>
+</div>
+<style>
+  .parents {
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+    margin: 1rem 0;
+  }
+
+  h2 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #999;
+    font-weight: normal;
+    margin-bottom: 1.5rem;
+  }
+
+  .parents-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .parent-side {
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .parent-side h3 {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    font-weight: normal;
+    margin: 0 0 0.25rem;
+  }
+
+  .parent-side .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+    color: #2c2c2c;
+    margin: 0;
+  }
+
+  .parent-side .parent-info {
+    font-size: 0.75rem;
+    color: #888;
+    margin: 0.25rem 0 0;
+    line-height: 1.4;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .divider span {
+    font-size: 1rem;
+    color: #c9a87c;
+  }
+
+  @media (max-width: 500px) {
+    .parents-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .divider {
+      width: 36px;
+      height: 36px;
+    }
+
+    .divider span {
+      font-size: 0.9rem;
+    }
+
+    .parent-side {
+      min-width: auto;
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+{
+  "theme": "tropical",
+  "groom": "Dimas Saputra",
+  "bride": "Anisa Dewi",
+  "groomFather": "Bapak H. Saputra Jaya",
+  "groomMother": "Ibu Hj. Kartika Sari",
+  "brideFather": "Bapak H. Rahman Dewi",
+  "brideMother": "Ibu Hj. Fatimah",
+  "date": "2026-09-05T10:00:00",
+  "venue": "Sunset Beach Bali",
+  "music": {
+    "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    "title": "Somewhere Over The Rainbow"
+  },
+  "shareText": "Kami mengundang Anda untuk hadir di pernikahan kami!",
+  "events": [
+    {
+      "name": "Akad Nikah",
+      "time": "10:00 - 12:00 WIB",
+      "location": "Pura Taplau Bali",
+      "mapsUrl": "https://maps.google.com/?q=Pura+Taplau+Bali"
+    },
+    {
+      "name": "Resepsi",
+      "time": "16:00 - 21:00 WIB",
+      "location": "Sunset Beach Bali",
+      "mapsUrl": "https://maps.google.com/?q=Sunset+Beach+Bali"
+    }
+  ],
+  "gallery": [
+    "https://images.unsplash.com/photo-1519741497674-611481863552?w=600",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600",
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600",
+    "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600"
+  ],
+  "loveStory": [
+    {
+      "year": "2022",
+      "title": "Pertama Bertemu",
+      "description": "Di kafe pinggir pantai Bali, ombak dan kopi mempertemukan kami."
+    },
+    {
+      "year": "2023",
+      "title": "Jadian",
+      "description": "Saat sunset di Kuta beach, kami resmi bersama."
+    },
+    {
+      "year": "2025",
+      "title": "Melamar",
+      "description": "Di tepi tebing Uluwatu dengan pemandangan laut yang menakjubkan."
+    },
+    {
+      "year": "2026",
+      "title": "Menikah",
+      "description": "Di pantai Bali yang cantik, memulai hidup baru bersama."
+    }
+  ]
+}

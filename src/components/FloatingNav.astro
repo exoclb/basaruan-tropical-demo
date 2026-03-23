@@ -1,0 +1,247 @@
+---
+const navItems = [
+  { id: 'hero', label: 'Home', icon: '♡' },
+  { id: 'countdown', label: 'Countdown', icon: '⏱' },
+  { id: 'ayat', label: 'Ayat', icon: '📖' },
+  { id: 'keluarga', label: 'Keluarga', icon: '👨‍👩‍👧' },
+  { id: 'acara', label: 'Acara', icon: '📍' },
+  { id: 'galeri', label: 'Galeri', icon: '📷' },
+  { id: 'cerita', label: 'Cerita', icon: '💕' },
+  { id: 'rsvp', label: 'RSVP', icon: '✓' },
+  { id: 'bagi', label: 'Bagi', icon: '↗' }
+];
+---
+<nav class="floating-nav" id="floating-nav">
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+    <span class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+  </button>
+  <div class="nav-menu" id="nav-menu">
+    {navItems.map((item) => (
+      <a href={`#${item.id}`} class="nav-item" data-section={item.id}>
+        <span class="nav-icon">{item.icon}</span>
+        <span class="nav-label">{item.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById('floating-nav') as HTMLElement | null;
+  const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
+  let isOpen = false;
+
+  if (nav && toggle) {
+    toggle.addEventListener('click', () => {
+      isOpen = !isOpen;
+      nav.classList.toggle('open', isOpen);
+      toggle.classList.toggle('active', isOpen);
+    });
+  }
+
+  document.querySelectorAll('.nav-item').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sectionId = (link as HTMLElement).dataset.section;
+      if (sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+      if (nav && toggle) {
+        isOpen = false;
+        nav.classList.remove('open');
+        toggle.classList.remove('active');
+      }
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (nav) {
+      if (currentScroll > 100) {
+        nav.classList.add('hidden');
+      } else {
+        nav.classList.remove('hidden');
+      }
+    }
+  }, { passive: true });
+
+  const sections = document.querySelectorAll('main > *');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('data-section') === id);
+        });
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-20% 0px -60% 0px' });
+
+  sections.forEach(section => {
+    if (section.id) sectionObserver.observe(section);
+  });
+</script>
+
+<style>
+  .floating-nav {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .floating-nav.hidden {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #c9a87c;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-toggle:active {
+    transform: scale(0.95);
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-toggle.active .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 4px);
+  }
+
+  .nav-toggle.active .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle.active .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -4px);
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .floating-nav.open .nav-menu {
+    display: flex;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #666;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    min-width: 120px;
+  }
+
+  .nav-item:active {
+    background: rgba(201, 168, 124, 0.1);
+    color: #c9a87c;
+  }
+
+  .nav-item.active {
+    background: rgba(201, 168, 124, 0.1);
+    color: #c9a87c;
+  }
+
+  .nav-icon {
+    font-size: 1rem;
+    width: 24px;
+    text-align: center;
+  }
+
+  .nav-label {
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+    .floating-nav {
+      top: 50%;
+      bottom: auto;
+      left: auto;
+      right: 20px;
+      transform: translateY(-50%);
+      flex-direction: column-reverse;
+    }
+
+    .floating-nav.hidden {
+      transform: translateY(-50%) translateX(100px);
+    }
+
+    .floating-nav.open .nav-menu {
+      flex-direction: column;
+    }
+
+    .nav-toggle {
+      margin-bottom: 0;
+      margin-top: 0.5rem;
+    }
+
+    .nav-menu {
+      flex-direction: column;
+    }
+
+    .nav-item {
+      padding: 0.4rem 0.75rem;
+      min-width: auto;
+    }
+
+    .nav-label {
+      display: none;
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+    }
+  }
+</style>
